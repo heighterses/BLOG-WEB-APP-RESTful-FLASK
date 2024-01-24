@@ -54,7 +54,6 @@ with app.app_context():
 
 @app.route('/')
 def get_all_posts():
-    # TODO: Query the database for all the posts. Convert the data to a python list.
 
     all = BlogPost.query.all()
     posts = []
