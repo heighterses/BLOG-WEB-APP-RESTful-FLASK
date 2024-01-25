@@ -93,7 +93,7 @@ def add_new_blog_post():
         )
         db.session.add(new_post)
         db.session.commit()
-        return redirect()
+        return redirect(url_for("get_all_posts"))
 
     return render_template("make-post.html", form=form)
 
