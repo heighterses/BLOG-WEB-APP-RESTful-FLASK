@@ -81,6 +81,17 @@ def show_post(post_id):
 @app.route('/add_new_post', methods=["POST", "GET"])
 def add_new_blog_post():
     form = Make_New_Post()
+    if form.validate_on_submit():
+        new_post = BlogPost(
+            title=form.blog_post_title.data,
+            subtitle=form.blog_subtitle.data,
+            body=form.blog_content.data,
+            img_url=form.blog_img_url.data,
+            author=form.author_name.data,
+            date=date.today().strftime("%B %d, %Y")
+
+        )
+
     return render_template("make-post.html", form=form)
 
 
