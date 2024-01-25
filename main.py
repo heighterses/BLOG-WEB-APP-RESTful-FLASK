@@ -91,6 +91,9 @@ def add_new_blog_post():
             date=date.today().strftime("%B %d, %Y")
 
         )
+        db.session.add(new_post)
+        db.session.commit()
+        return redirect()
 
     return render_template("make-post.html", form=form)
 
