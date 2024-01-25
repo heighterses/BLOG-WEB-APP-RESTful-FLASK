@@ -9,11 +9,11 @@ from wtforms.validators import DataRequired, URL
 from flask_ckeditor import CKEditor, CKEditorField
 from datetime import date
 
-
-
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '8BYkEfBA6O6donzWlSihBXox7C0sKR6b'
+
 Bootstrap5(app)
+ckeditor = CKEditor(app)
 
 
 # CREATE DATABASE
@@ -40,6 +40,16 @@ class BlogPost(db.Model):
 with app.app_context():
     db.create_all()
 
+#Class for make new Blog Post by WTF
+class Make_New_Post(FlaskForm):
+    blog_post_title = StringField('Blog Post Title',validators=[DataRequired()])
+    blog_subtitle = StringField('Blog Subtitle', validators=[DataRequired()])
+    author_name = StringField('Author Name',validators=[DataRequired()])
+    blog_img_url = StringField('Blog Image URL',validators=[DataRequired(), URL()])
+
+    # ADDING CKEDITOR FOR MAKING A BLOG CONTENT EDITOR
+    blog_content= CKEditorField('Blog Content', validators=[DataRequired()])
+    submit = SubmitField('Submit Post')
 
 @app.route('/')
 def get_all_posts():
@@ -70,6 +80,7 @@ def show_post(post_id):
 @app.route('/add_new_post')
 def add_new_blog_post():
     return render_template("make-post.html")
+
 
 # TODO: edit_post() to change an existing blog post
 
