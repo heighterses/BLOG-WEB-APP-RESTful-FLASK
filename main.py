@@ -40,16 +40,18 @@ class BlogPost(db.Model):
 with app.app_context():
     db.create_all()
 
-#Class for make new Blog Post by WTF
+
+# Class for make new Blog Post by WTF
 class Make_New_Post(FlaskForm):
-    blog_post_title = StringField('Blog Post Title',validators=[DataRequired()])
+    blog_post_title = StringField('Blog Post Title', validators=[DataRequired()])
     blog_subtitle = StringField('Blog Subtitle', validators=[DataRequired()])
-    author_name = StringField('Author Name',validators=[DataRequired()])
-    blog_img_url = StringField('Blog Image URL',validators=[DataRequired(), URL()])
+    author_name = StringField('Author Name', validators=[DataRequired()])
+    blog_img_url = StringField('Blog Image URL', validators=[DataRequired(), URL()])
 
     # ADDING CKEDITOR FOR MAKING A BLOG CONTENT EDITOR
-    blog_content= CKEditorField('Blog Content', validators=[DataRequired()])
+    blog_content = CKEditorField('Blog Content', validators=[DataRequired()])
     submit = SubmitField('Submit Post')
+
 
 @app.route('/')
 def get_all_posts():
@@ -76,10 +78,10 @@ def show_post(post_id):
     return render_template("post.html", post=requested_post)
 
 
-# TODO: add_new_post() to create a new blog post
-@app.route('/add_new_post')
+@app.route('/add_new_post', methods=["POST", "GET"])
 def add_new_blog_post():
-    return render_template("make-post.html")
+    form = Make_New_Post()
+    return render_template("make-post.html", form=form)
 
 
 # TODO: edit_post() to change an existing blog post
