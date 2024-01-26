@@ -98,7 +98,12 @@ def add_new_blog_post():
     return render_template("make-post.html", form=form)
 
 
-# TODO: edit_post() to change an existing blog post
+@app.route('/edit-post/<int:post_id>', methods=["PUT"])
+def edit_post(post_id):
+    post = db.get_or_404(BlogPost, post_id)
+    edit_form = Make_New_Post()
+    return render_template("make-post.html", form=edit_form, is_edit=True)
+
 
 # TODO: delete_post() to remove a blog post from the database
 
