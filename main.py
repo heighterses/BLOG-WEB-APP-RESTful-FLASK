@@ -97,6 +97,7 @@ def add_new_blog_post():
 
     return render_template("make-post.html", form=form)
 
+
 @app.route('/edit-post/<int:post_id>', methods=["POST", "GET"])
 def edit_post(post_id):
     post = db.get_or_404(BlogPost, post_id)
@@ -125,11 +126,15 @@ def edit_post(post_id):
     return render_template("make-post.html", form=edit_form, is_edit=True)
 
 
-@app.route('/delete-post')
-def delete_the_post():
-
-
-
+@app.route('/delete-post/<int:post_id>', methods=["GET", "POST"])
+def delete_the_post(post_id):
+    post_to_delete = BlogPost.query.filter_by(name=post_id).first()
+    if post_to_delete:
+        db.session.delete(post_to_delete)
+        db.session.commit()
+    else:
+        print("Post not Found!!")
+    return render_template("index.html")
 
 
 
