@@ -97,17 +97,42 @@ def add_new_blog_post():
 
     return render_template("make-post.html", form=form)
 
-
-@app.route('/edit-post/<int:post_id>', methods=["PUT"])
+@app.route('/edit-post/<int:post_id>', methods=["POST", "GET"])
 def edit_post(post_id):
     post = db.get_or_404(BlogPost, post_id)
-    edit_form = Make_New_Post()
+
+    # Pass the existing post data to the form
+    edit_form = Make_New_Post(
+        blog_post_title=post.title,
+        blog_subtitle=post.subtitle,
+        blog_content=post.body,
+        blog_img_url=post.img_url,
+        author_name=post.author
+    )
+
+    if edit_form.validate_on_submit():
+        # Update the post details in the database
+        post.title = edit_form.blog_post_title.data
+        post.subtitle = edit_form.blog_subtitle.data
+        post.body = edit_form.blog_content.data
+        post.img_url = edit_form.blog_img_url.data
+        post.author = edit_form.author_name.data
+        post.date = date.today().strftime("%B %d, %Y")
+
+        db.session.commit()
+        return redirect(url_for("get_all_posts"))
+
     return render_template("make-post.html", form=edit_form, is_edit=True)
 
 
-# TODO: delete_post() to remove a blog post from the database
+@app.route('/delete-post')
+def delete_the_post():
 
-# Below is the code from previous lessons. No changes needed.
+
+
+
+
+
 @app.route("/about")
 def about():
     return render_template("about.html")
