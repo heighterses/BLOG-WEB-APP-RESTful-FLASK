@@ -8,6 +8,7 @@ from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired, URL
 from flask_ckeditor import CKEditor, CKEditorField
 from datetime import date
+from werkzeug.security import generate_password_hash, check_password_hash
 from forms import Create_Post, User_Form
 from flask_login import UserMixin, login_user, LoginManager, login_required, current_user, logout_user
 
@@ -84,6 +85,13 @@ def get_all_posts():
         posts.append(posts_in_dict)
 
     return render_template("index.html", all_posts=posts)
+
+
+@app.route('/register', methods=["POST", "GET"])
+def add_new_user():
+    form = User_Form
+    if form.validate_on_submit():
+        hash_and_salted_password = generate_password_hash(form.password.data, method='pbkdf2:sha256', salt_length=8 )
 
 
 @app.route('/post/<int:post_id>')
