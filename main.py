@@ -128,13 +128,14 @@ def edit_post(post_id):
 
 @app.route('/delete-post/<int:post_id>', methods=["GET", "POST"])
 def delete_the_post(post_id):
-    post_to_delete = BlogPost.query.filter_by(name=post_id).first()
+    post_to_delete = BlogPost.query.filter_by(id=post_id).first()
     if post_to_delete:
         db.session.delete(post_to_delete)
         db.session.commit()
+        return redirect(url_for("get_all_posts"))
     else:
         print("Post not Found!!")
-    return render_template("index.html")
+
 
 
 
