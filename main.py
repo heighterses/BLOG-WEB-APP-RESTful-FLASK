@@ -11,8 +11,6 @@ from datetime import date
 from forms import Create_Post, User_Form
 from flask_login import UserMixin, login_user, LoginManager, login_required, current_user, logout_user
 
-
-
 # ------------------------------------------------------------------------
 
 
@@ -43,8 +41,12 @@ class BlogPost(db.Model):
     author: Mapped[str] = mapped_column(String(250), nullable=False)
     img_url: Mapped[str] = mapped_column(String(250), nullable=False)
 
+
 class User(UserMixin, db.Model):
-    pass
+    id = db.Coloumn(db.Integer, primary_key=True, nullable=False)
+    name = db.Coloumn(db.String, primary_key=False, nullable=False)
+    email = db.Coloumn(db.String, primary_key=False, nullable=False)
+    password = db.Coloumn(db.String, primary_key=True, nullable=False)
 
 
 with app.app_context():
@@ -145,8 +147,6 @@ def delete_the_post(post_id):
         return redirect(url_for("get_all_posts"))
     else:
         print("Post not Found!!")
-
-
 
 
 @app.route("/about")
