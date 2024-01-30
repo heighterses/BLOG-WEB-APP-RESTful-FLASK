@@ -2,7 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, PasswordField
 from wtforms import URLField
 from flask_ckeditor import CKEditorField
-from wtforms.validators import DataRequired
+from wtforms.validators import DataRequired, URL
 
 
 class User_Form(FlaskForm):

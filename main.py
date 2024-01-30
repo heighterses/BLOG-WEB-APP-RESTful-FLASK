@@ -8,6 +8,13 @@ from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired, URL
 from flask_ckeditor import CKEditor, CKEditorField
 from datetime import date
+from forms import Create_Post, User_Form
+from flask_login import UserMixin, login_user, LoginManager, login_required, current_user, logout_user
+
+
+
+# ------------------------------------------------------------------------
+
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '8BYkEfBA6O6donzWlSihBXox7C0sKR6b'
@@ -35,6 +42,9 @@ class BlogPost(db.Model):
     body: Mapped[str] = mapped_column(Text, nullable=False)
     author: Mapped[str] = mapped_column(String(250), nullable=False)
     img_url: Mapped[str] = mapped_column(String(250), nullable=False)
+
+class User(UserMixin, db.Model):
+    pass
 
 
 with app.app_context():
