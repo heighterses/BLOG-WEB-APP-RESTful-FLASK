@@ -41,12 +41,13 @@ class BlogPost(db.Model):
     author: Mapped[str] = mapped_column(String(250), nullable=False)
     img_url: Mapped[str] = mapped_column(String(250), nullable=False)
 
-
+#Creating User Table in database
 class User(UserMixin, db.Model):
-    id = db.Coloumn(db.Integer, primary_key=True, nullable=False)
-    name = db.Coloumn(db.String, primary_key=False, nullable=False)
-    email = db.Coloumn(db.String, primary_key=False, nullable=False)
-    password = db.Coloumn(db.String, primary_key=True, nullable=False)
+    __tablename__ = "users"
+    id = db.Column(db.Integer, primary_key=True, nullable=False)
+    name = db.Column(db.String(120), nullable=False)
+    email = db.Column(db.String(120), nullable=False)
+    password = db.Column(db.String(120), nullable=False)
 
 
 with app.app_context():
