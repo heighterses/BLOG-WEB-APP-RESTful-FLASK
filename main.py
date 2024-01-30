@@ -41,7 +41,8 @@ class BlogPost(db.Model):
     author: Mapped[str] = mapped_column(String(250), nullable=False)
     img_url: Mapped[str] = mapped_column(String(250), nullable=False)
 
-#Creating User Table in database
+
+# Creating User Table in database
 class User(UserMixin, db.Model):
     __tablename__ = "users"
     id = db.Column(db.Integer, primary_key=True, nullable=False)
