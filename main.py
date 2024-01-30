@@ -89,12 +89,22 @@ def get_all_posts():
 
 @app.route('/register', methods=["POST", "GET"])
 def add_new_user():
-    form = User_Form
+    form = User_Form()
     if form.validate_on_submit():
-        hash_and_salted_password = generate_password_hash(form.password.data, method='pbkdf2:sha256', salt_length=8 )
+        hash_and_salted_password = generate_password_hash(form.password.data, method='pbkdf2:sha256', salt_length=8)
         new_user = User(name=form.name.data,
                         email=form.email.data,
                         password=hash_and_salted_password)
+        db.session.add(new_user)
+        db.session.commit()
+
+        return redirect(url_for('get_all_posts'))
+    return render_template("register.html", form=form)
+
+
+@app.route('/login', methods=["POST", "GET"])
+def login():
+    pass
 
 
 @app.route('/post/<int:post_id>')
